@@ -1,0 +1,15 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/base}" layout:fragment="content">
+
+    <h2 th:text="${gig.formattedName}"></h2>
+    <h3 th:text="${gig.formattedDate}"></h3>
+
+    <video controls autoplay crossorigin="anonymous">
+        <source th:src="@{${gig.videoUrl}}" type="video/mp4" />
+        <track th:src="@{${gig.chaptersUrl}}" kind="chapters" default>
+    </video>
+
+    <div id="tracks"></div>
+
+    <script type='text/javascript' src='/js/video.js'></script>
+</div>
