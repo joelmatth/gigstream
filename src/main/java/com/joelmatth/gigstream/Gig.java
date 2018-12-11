@@ -6,7 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Document
 public class Gig {
@@ -48,31 +47,6 @@ public class Gig {
         return date.getYear();
     }
 
-    public String getFormattedDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
-        return date.format(formatter);
-    }
-
-    private String getUrl(String suffix) {
-        return String.format("%s/%d%s", Config.GIG_STORE, id, suffix);
-    }
-
-    public String getVideoUrl() {
-        return UrlBuilder.video(this).toString();
-    }
-
-    public String getImageUrl() {
-        return UrlBuilder.image(this).toString();
-    }
-
-    public String getThumbUrl() {
-        return UrlBuilder.thumb(this).toString();
-    }
-
-    public String getChaptersUrl() {
-        return UrlBuilder.chapters(this).toString();
-    }
-
     public String getLocation(){
         return location;
     }
@@ -83,10 +57,6 @@ public class Gig {
 
     public String getName() {
         return name;
-    }
-
-    public String getFormattedName() {
-        return null == name ? artist + " at " + location : name;
     }
 
     public void setName(String name) {

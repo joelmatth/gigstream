@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -25,7 +26,7 @@ public class WebController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Gig> gigs = search.recent();
+        List<GigUrl> gigs = GigUrl.of(search.recent());
         model.addAttribute("title", "Recently added");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -33,7 +34,7 @@ public class WebController {
 
     @GetMapping("/search")
     public String search(@RequestParam(name = "q") String q, Model model) {
-        List<Gig> gigs = search.byTerm(q);
+        List<GigUrl> gigs = GigUrl.of(search.byTerm(q));
         model.addAttribute("title", gigs.size() + " results for " + q);
         model.addAttribute("gigs", gigs);
         return "results";
@@ -41,7 +42,7 @@ public class WebController {
 
     @GetMapping("/all")
     public String all(Model model) {
-        List<Gig> gigs = repository.findAllByOrderByDateDesc();
+        List<GigUrl> gigs = GigUrl.of(repository.findAllByOrderByDateDesc());
         model.addAttribute("title", "All gigs");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -49,8 +50,8 @@ public class WebController {
 
     @GetMapping("/location")
     public String location(Model model) {
-        List<Gig> gigs = repository.findByLocationOrderByDateDesc(
-                Config.mostCommonLocation);
+        List<GigUrl> gigs = GigUrl.of(repository.findByLocationOrderByDateDesc(
+                Config.mostCommonLocation));
 
         model.addAttribute("title", Config.mostCommonLocation);
         model.addAttribute("gigs", gigs);
@@ -65,7 +66,7 @@ public class WebController {
             return "results";
         }
 
-        model.addAttribute("gig", gig.get());
+        model.addAttribute("gig", new GigUrl(gig.get()));
         return "gig";
     }
 
@@ -77,7 +78,15 @@ public class WebController {
 
     @PostConstruct
     public void load() {
-        URL url = UrlBuilder.gigList();
+        URL url = null;
+
+        try {
+            URL rootUrl = new URL(Config.GIG_STORE);
+            url = new URL(rootUrl, Config.GIG_LIST);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
         try (Scanner scanner = new Scanner(url.openStream(), StandardCharsets.UTF_8.toString()))
         {
