@@ -2,10 +2,10 @@ package com.joelmatth.gigstream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,12 +21,26 @@ import java.util.Scanner;
 @Controller
 public class WebController {
 
-    @Autowired Repository repository;
-    @Autowired Search search;
+    private final Repository repository;
+    private final Search search;
+    private final Config config;
+    private final GigUrlFactory gigUrlFactory;
+
+    WebController(Repository repository, Search search, Config config, GigUrlFactory gigUrlFactory) {
+        this.repository = repository;
+        this.search = search;
+        this.config = config;
+        this.gigUrlFactory = gigUrlFactory;
+    }
+
+    @ModelAttribute("config")
+    public Config config() {
+        return config;
+    }
 
     @GetMapping("/")
     public String index(Model model) {
-        List<GigUrl> gigs = GigUrl.of(search.recent());
+        List<GigUrl> gigs = gigUrlFactory.of(search.recent());
         model.addAttribute("title", "Recently added");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -34,7 +48,7 @@ public class WebController {
 
     @GetMapping("/search")
     public String search(@RequestParam(name = "q") String q, Model model) {
-        List<GigUrl> gigs = GigUrl.of(search.byTerm(q));
+        List<GigUrl> gigs = gigUrlFactory.of(search.byTerm(q));
         model.addAttribute("title", gigs.size() + " results for " + q);
         model.addAttribute("gigs", gigs);
         return "results";
@@ -42,7 +56,7 @@ public class WebController {
 
     @GetMapping("/all")
     public String all(Model model) {
-        List<GigUrl> gigs = GigUrl.of(repository.findAllByOrderByDateDesc());
+        List<GigUrl> gigs = gigUrlFactory.of(repository.findAllByOrderByDateDesc());
         model.addAttribute("title", "All gigs");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -50,10 +64,10 @@ public class WebController {
 
     @GetMapping("/location")
     public String location(Model model) {
-        List<GigUrl> gigs = GigUrl.of(repository.findByLocationOrderByDateDesc(
-                Config.mostCommonLocation));
+        List<GigUrl> gigs = gigUrlFactory.of(repository.findByLocationOrderByDateDesc(
+                config.mostCommonLocation));
 
-        model.addAttribute("title", Config.mostCommonLocation);
+        model.addAttribute("title", config.mostCommonLocation);
         model.addAttribute("gigs", gigs);
         return "results";
     }
@@ -66,7 +80,7 @@ public class WebController {
             return "results";
         }
 
-        model.addAttribute("gig", new GigUrl(gig.get()));
+        model.addAttribute("gig", gigUrlFactory.of(gig.get()));
         return "gig";
     }
 
@@ -81,8 +95,8 @@ public class WebController {
         URL url = null;
 
         try {
-            URL rootUrl = new URL(Config.GIG_STORE);
-            url = new URL(rootUrl, Config.GIG_LIST);
+            URL rootUrl = new URL(config.gigStore);
+            url = new URL(rootUrl, config.gigList);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             System.exit(1);
@@ -96,7 +110,7 @@ public class WebController {
             List<Gig> gigs = mapper.readValue(json, new TypeReference<List<Gig>>(){});
             repository.deleteAll();
             repository.saveAll(gigs);
-            Config.mostCommonLocation = search.mostCommonLocation();
+            config.mostCommonLocation = search.mostCommonLocation();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(2);

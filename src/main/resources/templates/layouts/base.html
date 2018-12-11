@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title th:text="${T(com.joelmatth.gigstream.Config).SITE_TITLE}"></title>
+    <title th:text="${config.siteTitle}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -13,8 +13,8 @@
 <body>
 <nav class="navbar navbar-light bg-light mb-3">
     <div class="container">
-        <a class="navbar-brand" th:text="${T(com.joelmatth.gigstream.Config).SITE_TITLE}" href="/"></a>
-        <a th:href="@{/location}" th:text="${T(com.joelmatth.gigstream.Config).mostCommonLocation}"></a>
+        <a class="navbar-brand" th:text="${config.siteTitle}" href="/"></a>
+        <a th:href="@{/location}" th:text="${config.mostCommonLocation}"></a>
         <a th:href="@{/all}">All</a>
         <form class="form-inline" method="get" action="/search">
             <input class="form-control mr-sm-2" type="search" aria-label="Search" name="q" placeholder="Search">

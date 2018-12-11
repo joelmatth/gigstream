@@ -3,37 +3,31 @@ package com.joelmatth.gigstream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 class GigUrl {
 
-    final Gig gig;
+    private final Config config;
+    private final Gig gig;
 
-    GigUrl(Gig gig) {
+    GigUrl(Config config, Gig gig) {
+        this.config = config;
         this.gig = gig;
     }
 
-    static List<GigUrl> of(List<Gig> gigs) {
-        return gigs.stream()
-                .map(GigUrl::new)
-                .collect(Collectors.toList());
-    }
-
     public URL getVideo() {
-        return buildFromGig(Config.VIDEO_SUFFIX);
+        return buildFromGig(config.videoSuffix);
     }
 
     public URL getImage() {
-        return buildFromGig(Config.IMAGE_SUFFIX);
+        return buildFromGig(config.imageSuffix);
     }
 
     public URL getThumb() {
-        return buildFromGig(Config.THUMB_SUFFIX);
+        return buildFromGig(config.thumbSuffix);
     }
 
     public URL getChapters() {
-        return buildFromGig(Config.CHAPTERS_SUFFIX);
+        return buildFromGig(config.chaptersSuffix);
     }
 
     public String getFormattedName() {
@@ -59,7 +53,7 @@ class GigUrl {
         URL url = null;
 
         try {
-            URL rootUrl = new URL(Config.GIG_STORE);
+            URL rootUrl = new URL(config.gigStore);
             url = new URL(rootUrl, filename);
         } catch (MalformedURLException e) {
             e.printStackTrace();

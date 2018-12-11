@@ -1,8 +1,5 @@
 package com.joelmatth.gigstream;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,11 +7,15 @@ import java.util.Optional;
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
-@Component
 public class Search {
 
-    @Autowired
-    Repository repository;
+    private final Repository repository;
+    private final Config config;
+
+    Search(Repository repository, Config config) {
+        this.repository = repository;
+        this.config = config;
+    }
 
     public List<Gig> byTerms(String artist, String name, String location) {
         return repository.findByArtistContainingIgnoreCaseOrNameContainingIgnoreCaseOrLocationContainingIgnoreCase(
@@ -41,7 +42,7 @@ public class Search {
     }
 
     public String mostCommonLocation() {
-        String mostCommonLocation = Config.mostCommonLocation;
+        String mostCommonLocation = config.mostCommonLocation;
 
         Map<String, List<Gig>> gigsByLocation = repository.findAll().stream()
                 .collect(groupingBy(Gig::getLocation));
