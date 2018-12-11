@@ -63,8 +63,4 @@ public class Gig {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Gig " + date + " " + artist;
-    }
 }
