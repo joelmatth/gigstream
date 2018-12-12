@@ -2,12 +2,10 @@ package com.joelmatth.gigstream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Controller
-public class WebController {
+public class WebController implements ErrorController {
 
     private final Repository repository;
     private final Search search;
@@ -36,6 +34,17 @@ public class WebController {
     @ModelAttribute("config")
     public Config config() {
         return config;
+    }
+
+    @Override
+    public String getErrorPath() {
+        return "/error";
+    }
+
+    @RequestMapping("/error")
+    public String error(Model model) {
+        model.addAttribute("message", "An exception occurred in the program");
+        return "error";
     }
 
     @GetMapping("/")
@@ -77,7 +86,7 @@ public class WebController {
         Optional<Gig> gig = search.load(id);
 
         if (!gig.isPresent()) {
-            return "results";
+            return "error";
         }
 
         model.addAttribute("gig", gigUrlFactory.of(gig.get()));

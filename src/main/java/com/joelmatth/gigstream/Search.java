@@ -30,7 +30,7 @@ public class Search {
         Optional<Gig> gig = Optional.empty();
         List<Gig> gigs = repository.findById(id);
 
-        if (gigs.size() == 1) {
+        if (gigs != null) {
             gig = Optional.of(gigs.get(0));
         }
 
