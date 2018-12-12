@@ -1,5 +1,6 @@
 package com.joelmatth.gigstream;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +42,11 @@ public class Config {
     @Bean
     Search search(Repository repository, Config config) {
         return new Search(repository, config);
+    }
+
+    @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
     }
 
 }
