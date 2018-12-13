@@ -1,6 +1,5 @@
 package com.joelmatth.gigstream;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 
@@ -46,20 +45,8 @@ class GigUrl {
     }
 
     private URL buildFromGig(String suffix) {
-        return build(String.format("%04d_%s", gig.getId(), suffix));
+        String path = String.format("%04d_%s", gig.getId(), suffix);
+        return UrlFactory.get(config.gigStore, path);
     }
 
-    private URL build(String filename) {
-        URL url = null;
-
-        try {
-            URL rootUrl = new URL(config.gigStore);
-            url = new URL(rootUrl, filename);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-
-        return url;
-    }
 }

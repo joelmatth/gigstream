@@ -13,7 +13,7 @@ public class Config {
     @Value("${title:Gigstream}")
     public String siteTitle;
 
-    @Value("${data.url:https://example.com/store/}")
+    @Value("${data.url:https://example.com/store}")
     public String gigStore;
 
     @Value("${video.filename.suffix:set.mp4}")

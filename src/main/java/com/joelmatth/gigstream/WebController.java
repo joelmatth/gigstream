@@ -2,6 +2,7 @@ package com.joelmatth.gigstream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Controller
+@Slf4j
 public class WebController implements ErrorController {
 
     private final Repository repository;
@@ -101,17 +102,9 @@ public class WebController implements ErrorController {
 
     @PostConstruct
     public void load() {
-        URL url = null;
+        URL listUrl = UrlFactory.get(config.gigStore, config.gigList);
 
-        try {
-            URL rootUrl = new URL(config.gigStore);
-            url = new URL(rootUrl, config.gigList);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-
-        try (Scanner scanner = new Scanner(url.openStream(), StandardCharsets.UTF_8.toString()))
+        try (Scanner scanner = new Scanner(listUrl.openStream(), StandardCharsets.UTF_8.toString()))
         {
             scanner.useDelimiter("\\A");
             String json = scanner.hasNext() ? scanner.next() : "";
@@ -121,7 +114,7 @@ public class WebController implements ErrorController {
             repository.saveAll(gigs);
             config.mostCommonLocation = search.mostCommonLocation();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error: Failed to load list from {} - check configuration", listUrl);
             System.exit(2);
         }
     }
