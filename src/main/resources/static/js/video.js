@@ -11,7 +11,8 @@ function play() {
 function render() {
     var c = v.textTracks[0].cues;
     for (var i=0; i<c.length; i++) {
-        var s = document.createElement("div");
+        var s = document.createElement("a");
+        s.classList = "track list-group-item list-group-item-action py-1";
         s.innerHTML = c[i].text;
         s.setAttribute('data-start',c[i].startTime);
         s.addEventListener("click",seek);
