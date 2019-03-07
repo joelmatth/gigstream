@@ -1,0 +1,26 @@
+[
+    {
+        "id": 0,
+        "artist": "Radiohead",
+        "date": "2017-06-23",
+        "location": "Glastonbury"
+    },
+    {
+        "id": 1,
+        "artist": "Primal Scream",
+        "date": "2011-07-22",
+        "location": "Auditorium Parco Della Musica"
+    },
+    {
+        "id": 2,
+        "artist": "Ben Howard",
+        "date": "2014-12-17",
+        "location": "Vorst Nationaal"
+    },
+    {
+        "id": 3,
+        "artist": "LCD Soundsystem",
+        "date": "2010-10-27",
+        "location": "The Fillmore Detroit"
+    }
+]
