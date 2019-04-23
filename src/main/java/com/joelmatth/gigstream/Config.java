@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @PropertySource(value = "configuration.properties", ignoreResourceNotFound = true)
@@ -31,6 +32,10 @@ public class Config {
     @Value("${gig.list.filename:gigs.json}")
     public String gigList;
 
+    public boolean hasLogo = resourceExists("static/img/logo.png");
+
+    public boolean hasFavicon152 = resourceExists("static/favicon-152.png");
+
     // Placeholder location until set of gigs have been loaded
     public String mostCommonLocation = "Location";
 
@@ -49,4 +54,7 @@ public class Config {
         return new LayoutDialect();
     }
 
+    private boolean resourceExists(String location) {
+        return new ClassPathResource(location).exists();
+    }
 }

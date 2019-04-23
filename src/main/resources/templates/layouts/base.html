@@ -8,12 +8,16 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/base.css">
+    <link th:if="${config.hasFavicon152}" rel="apple-touch-icon-precomposed" href="/favicon-152.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
 <nav class="navbar navbar-light bg-light mb-3">
     <div class="container">
-        <a class="navbar-brand" th:text="${config.siteTitle}" href="/"></a>
+        <a th:if="${config.hasLogo}" href="/">
+            <img src="/img/logo.png" height="40" class="d-inline-block align-top" th:title="${config.siteTitle} + ' Home'" />
+        </a>
+        <a th:unless="${config.hasLogo}" class="navbar-brand" th:text="${config.siteTitle}" href="/"></a>
         <a th:href="@{/location}" th:text="${config.mostCommonLocation}"></a>
         <a th:href="@{/all}">All</a>
         <form class="form-inline" method="get" action="/search">
