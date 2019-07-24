@@ -35,11 +35,11 @@ or use an object storage service such as S3.
 
 The files should have a flat directory structure as:
 * `gigs.json` - index
-* `0000_set.mp4` - set video with ID 0000
-* `0000_thumb.jpg` - set thumbnail with ID 0000
-* `0001_set.mp4` - set video with ID 0001
-* `0001_thumb.jpg` - set thumbnail with ID 0001
-* `0001_chapters.vtt` - set tracklist with ID 0001 (optional)
+* `0_set.mp4` - set video with ID 0
+* `0_thumb.jpg` - set thumbnail with ID 0
+* `1_set.mp4` - set video with ID 1
+* `1_thumb.jpg` - set thumbnail with ID 1
+* `1_chapters.vtt` - set tracklist with ID 1 (optional)
 * ...
 
 Look in the [example](example) directory for a rough guide (and to see the syntax of the

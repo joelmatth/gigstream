@@ -45,7 +45,7 @@ class GigUrl {
     }
 
     private URL buildFromGig(String suffix) {
-        String path = String.format("%04d_%s", gig.getId(), suffix);
+        String path = String.format("%d_%s", gig.getId(), suffix);
         return UrlFactory.get(config.gigStore, path);
     }
 
