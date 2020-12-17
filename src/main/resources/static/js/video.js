@@ -1,26 +1,26 @@
-var v = document.querySelector("video");
-var t = document.querySelector("track");
-var b = document.querySelector("#tracks");
+const video = document.querySelector('video');
 
-t.addEventListener('load',render,false);
-
-function play() {
-    if(v.paused) { v.play(); } else { v.pause(); }
-}
+document.querySelector('track')
+    .addEventListener('load', render, false);
 
 function render() {
-    var c = v.textTracks[0].cues;
-    for (var i=0; i<c.length; i++) {
-        var s = document.createElement("a");
-        s.classList = "track list-group-item list-group-item-action py-1";
-        s.innerHTML = c[i].text;
-        s.setAttribute('data-start',c[i].startTime);
-        s.addEventListener("click",seek);
-        b.appendChild(s);
-    }
+    const tracks = document.querySelector('#tracks');
+
+    Array.from(video.textTracks[0].cues)
+        .map(seeker)
+        .forEach(s => tracks.appendChild(s));
+}
+
+function seeker(cue) {
+    const s = document.createElement('a');
+    s.classList = 'track list-group-item list-group-item-action py-1';
+    s.innerHTML = cue.text;
+    s.setAttribute('data-start', cue.startTime);
+    s.addEventListener('click', seek);
+    return s;
 }
 
 function seek(e) {
-    v.currentTime = this.getAttribute('data-start');
-    if(v.paused) { v.play(); }
+    video.currentTime = this.getAttribute('data-start');
+    if (video.paused) video.play();
 }
