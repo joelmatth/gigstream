@@ -26,8 +26,8 @@ public class Config {
     @Value("${thumbnail.filename.suffix:thumb.jpg}")
     public String thumbSuffix;
 
-    @Value("${chapters.filename.suffix:chapters.vtt}")
-    public String chaptersSuffix;
+    @Value("${tracks.filename.suffix:chapters.vtt}")
+    public String tracksSuffix;
 
     @Value("${gig.list.filename:gigs.json}")
     public String gigList;

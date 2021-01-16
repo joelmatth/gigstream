@@ -25,8 +25,8 @@ class GigUrl {
         return buildFromGig(config.thumbSuffix);
     }
 
-    public URL getChapters() {
-        return buildFromGig(config.chaptersSuffix);
+    public URL getTracks() {
+        return buildFromGig(config.tracksSuffix);
     }
 
     public String getFormattedName() {

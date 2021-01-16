@@ -6,10 +6,10 @@
 
     <video controls autoplay crossorigin="anonymous">
         <source th:src="@{${gig.video}}" />
-        <track th:src="@{${gig.chapters}}" kind="chapters" default>
+        <track th:src="@{${gig.tracks}}" kind="chapters" default>
     </video>
 
     <div id="tracks"></div>
 
-    <script type='text/javascript' th:src='@{/js/video.js}'></script>
+    <script type='text/javascript' th:src='@{/js/tracks.js}'></script>
 </div>
