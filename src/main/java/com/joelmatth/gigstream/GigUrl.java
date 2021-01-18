@@ -11,7 +11,7 @@ class GigUrl {
     Config config;
     Gig gig;
 
-    public URL getVideo() {
+    public URL getSet() {
         return buildFromGig("set");
     }
 
