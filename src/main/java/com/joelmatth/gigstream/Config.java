@@ -11,7 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 public class Config {
 
     public String dataUrl = envVarOrDefault("DATA_URL", "https://raw.githubusercontent.com/joelmatth/gigstream/master/example");
-    public String gigListFilename = envVarOrDefault("GIG_LIST_FILENAME", "gigs.json");
+    public String indexFilename = envVarOrDefault("INDEX_FILENAME", "index.json");
     public String siteTitle = envVarOrDefault("SITE_TITLE", "Gigstream");
 
     public boolean hasFavicon152 = resourceExists("static/favicon-152.png");

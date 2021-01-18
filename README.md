@@ -28,7 +28,7 @@ Gigstream loads gig videos from a configurable web address. Either host your own
 or use an object storage service such as S3.
 
 The files should have a flat directory structure as:
-* `gigs.json` - index
+* `index.json` - index
 * `0_set` - set video with ID 0
 * `0_thumb` - set thumbnail with ID 0
 * `1_set` - set video with ID 1
