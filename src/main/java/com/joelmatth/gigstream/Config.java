@@ -17,18 +17,6 @@ public class Config {
     @Value("${data.url:https://raw.githubusercontent.com/joelmatth/gigstream/master/example}")
     public String gigStore;
 
-    @Value("${video.filename.suffix:set.mp4}")
-    public String videoSuffix;
-
-    @Value("${image.filename.suffix:set.jpg}")
-    public String imageSuffix;
-
-    @Value("${thumbnail.filename.suffix:thumb.jpg}")
-    public String thumbSuffix;
-
-    @Value("${tracks.filename.suffix:chapters.vtt}")
-    public String tracksSuffix;
-
     @Value("${gig.list.filename:gigs.json}")
     public String gigList;
 

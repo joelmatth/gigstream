@@ -14,19 +14,19 @@ class GigUrl {
     }
 
     public URL getVideo() {
-        return buildFromGig(config.videoSuffix);
+        return buildFromGig("set");
     }
 
     public URL getImage() {
-        return buildFromGig(config.imageSuffix);
+        return buildFromGig("image");
     }
 
     public URL getThumb() {
-        return buildFromGig(config.thumbSuffix);
+        return buildFromGig("thumb");
     }
 
     public URL getTracks() {
-        return buildFromGig(config.tracksSuffix);
+        return buildFromGig("tracks");
     }
 
     public String getFormattedName() {
