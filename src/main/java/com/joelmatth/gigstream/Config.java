@@ -11,14 +11,14 @@ import org.springframework.core.io.ClassPathResource;
 @PropertySource(value = "configuration.properties", ignoreResourceNotFound = true)
 public class Config {
 
-    @Value("${title:Gigstream}")
+    @Value("${site.title:Gigstream}")
     public String siteTitle;
 
     @Value("${data.url:https://raw.githubusercontent.com/joelmatth/gigstream/master/example}")
-    public String gigStore;
+    public String dataUrl;
 
     @Value("${gig.list.filename:gigs.json}")
-    public String gigList;
+    public String gigListFilename;
 
     public boolean hasLogo = resourceExists("static/img/logo.png");
 

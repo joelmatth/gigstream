@@ -95,7 +95,7 @@ public class WebController implements ErrorController {
 
     @PostConstruct
     public void load() {
-        URL listUrl = UrlFactory.get(config.gigStore, config.gigList);
+        URL listUrl = UrlFactory.get(config.dataUrl, config.gigListFilename);
 
         try (Scanner scanner = new Scanner(listUrl.openStream(), StandardCharsets.UTF_8.toString())) {
             scanner.useDelimiter("\\A");

@@ -40,7 +40,7 @@ class GigUrl {
 
     private URL buildFromGig(String suffix) {
         String path = String.format("%d_%s", gig.getId(), suffix);
-        return UrlFactory.get(config.gigStore, path);
+        return UrlFactory.get(config.dataUrl, path);
     }
 
 }
