@@ -38,10 +38,6 @@ class GigUrl {
         return gig.getDate().format(formatter);
     }
 
-    public Gig getGig() {
-        return gig;
-    }
-
     private URL buildFromGig(String suffix) {
         String path = String.format("%d_%s", gig.getId(), suffix);
         return UrlFactory.get(config.gigStore, path);
