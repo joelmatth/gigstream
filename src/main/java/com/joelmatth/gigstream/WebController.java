@@ -69,9 +69,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/location")
     public String location(Model model) {
-        List<GigUrl> gigs = gigUrlFactory.of(repository.findByLocationOrderByDateDesc(
-                config.mostCommonLocation));
-
+        List<GigUrl> gigs = gigUrlFactory.of(repository.findByLocationOrderByDateDesc(config.mostCommonLocation));
         model.addAttribute("title", config.mostCommonLocation);
         model.addAttribute("gigs", gigs);
         return "results";
@@ -99,8 +97,7 @@ public class WebController implements ErrorController {
     public void load() {
         URL listUrl = UrlFactory.get(config.gigStore, config.gigList);
 
-        try (Scanner scanner = new Scanner(listUrl.openStream(), StandardCharsets.UTF_8.toString()))
-        {
+        try (Scanner scanner = new Scanner(listUrl.openStream(), StandardCharsets.UTF_8.toString())) {
             scanner.useDelimiter("\\A");
             String json = scanner.hasNext() ? scanner.next() : "";
             ObjectMapper mapper = new ObjectMapper();

@@ -12,8 +12,8 @@ public interface Repository extends MongoRepository<Gig, Integer> {
 
     List<Gig> findByLocationOrderByDateDesc(String location);
 
-    List<Gig> findByArtistContainingIgnoreCaseOrNameContainingIgnoreCaseOrLocationContainingIgnoreCase(String artist,
-            String name, String location);
+    List<Gig> findByArtistContainingIgnoreCaseOrNameContainingIgnoreCaseOrLocationContainingIgnoreCase(
+            String artist, String name, String location);
 
     List<Gig> findById(int id);
 
