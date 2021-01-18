@@ -1,5 +1,4 @@
 .idea
 target
-src/main/resources/configuration.properties
 src/main/resources/static/favicon*
 src/main/resources/static/img

@@ -8,21 +8,14 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-@PropertySource(value = "configuration.properties", ignoreResourceNotFound = true)
 public class Config {
 
-    @Value("${site.title:Gigstream}")
-    public String siteTitle;
-
-    @Value("${data.url:https://raw.githubusercontent.com/joelmatth/gigstream/master/example}")
-    public String dataUrl;
-
-    @Value("${gig.list.filename:gigs.json}")
-    public String gigListFilename;
-
-    public boolean hasLogo = resourceExists("static/img/logo.png");
+    public String dataUrl = envVarOrDefault("DATA_URL", "https://raw.githubusercontent.com/joelmatth/gigstream/master/example");
+    public String gigListFilename = envVarOrDefault("GIG_LIST_FILENAME", "gigs.json");
+    public String siteTitle = envVarOrDefault("SITE_TITLE", "Gigstream");
 
     public boolean hasFavicon152 = resourceExists("static/favicon-152.png");
+    public boolean hasLogo = resourceExists("static/img/logo.png");
 
     // Placeholder location until set of gigs have been loaded
     public String mostCommonLocation = "Location";
@@ -44,5 +37,10 @@ public class Config {
 
     private boolean resourceExists(String location) {
         return new ClassPathResource(location).exists();
+    }
+
+    private String envVarOrDefault(String envVar, String defaultValue) {
+        String value = System.getenv(envVar);
+        return value == null ? defaultValue : value;
     }
 }
