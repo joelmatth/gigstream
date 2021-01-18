@@ -1,5 +1,7 @@
 package com.joelmatth.gigstream;
 
+import lombok.Value;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,15 +9,11 @@ import java.util.Optional;
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
+@Value
 public class Search {
 
-    private final Repository repository;
-    private final Config config;
-
-    Search(Repository repository, Config config) {
-        this.repository = repository;
-        this.config = config;
-    }
+    Repository repository;
+    Config config;
 
     public List<Gig> byTerms(String artist, String name, String location) {
         return repository.findByArtistContainingIgnoreCaseOrNameContainingIgnoreCaseOrLocationContainingIgnoreCase(

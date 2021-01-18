@@ -1,17 +1,15 @@
 package com.joelmatth.gigstream;
 
+import lombok.Value;
+
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 
+@Value
 class GigUrl {
 
-    private final Config config;
-    private final Gig gig;
-
-    GigUrl(Config config, Gig gig) {
-        this.config = config;
-        this.gig = gig;
-    }
+    Config config;
+    Gig gig;
 
     public URL getVideo() {
         return buildFromGig("set");

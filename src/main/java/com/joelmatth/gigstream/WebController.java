@@ -2,6 +2,7 @@ package com.joelmatth.gigstream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -18,19 +19,13 @@ import java.util.Scanner;
 
 @Controller
 @Slf4j
+@Value
 public class WebController implements ErrorController {
 
-    private final Repository repository;
-    private final Search search;
-    private final Config config;
-    private final GigUrlFactory gigUrlFactory;
-
-    WebController(Repository repository, Search search, Config config, GigUrlFactory gigUrlFactory) {
-        this.repository = repository;
-        this.search = search;
-        this.config = config;
-        this.gigUrlFactory = gigUrlFactory;
-    }
+    Repository repository;
+    Search search;
+    Config config;
+    GigUrlFactory gigUrlFactory;
 
     @ModelAttribute("config")
     public Config config() {

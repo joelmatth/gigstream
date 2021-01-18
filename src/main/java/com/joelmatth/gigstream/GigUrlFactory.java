@@ -1,15 +1,14 @@
 package com.joelmatth.gigstream;
 
+import lombok.Value;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Value
 class GigUrlFactory {
 
-    private final Config config;
-
-    GigUrlFactory(Config config) {
-        this.config = config;
-    }
+    Config config;
 
     GigUrl of(Gig gig) {
         return new GigUrl(config, gig);
