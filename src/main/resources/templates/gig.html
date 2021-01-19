@@ -5,8 +5,8 @@
     <h3 th:text="${gig.formattedDate}"></h3>
 
     <video controls autoplay crossorigin="anonymous">
-        <source th:src="@{${gig.set}}" />
-        <track th:src="@{${gig.tracks}}" kind="chapters" default>
+        <source th:src="@{${gig.objectUrl(config.dataUrl, 'set')}}" />
+        <track th:src="@{${gig.objectUrl(config.dataUrl, 'tracks')}}" kind="chapters" default>
     </video>
 
     <div id="tracks"></div>

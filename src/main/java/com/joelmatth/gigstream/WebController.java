@@ -16,7 +16,6 @@ public class WebController implements ErrorController {
 
     Data data;
     Config config;
-    GigUrlFactory gigUrlFactory;
 
     @ModelAttribute("config")
     public Config config() {
@@ -41,7 +40,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<GigUrl> gigs = gigUrlFactory.of(data.byRecentlyAdded());
+        List<Gig> gigs = data.byRecentlyAdded();
         model.addAttribute("title", "Recently added");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -49,7 +48,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/search")
     public String search(@RequestParam(name = "q") String q, Model model) {
-        List<GigUrl> gigs = gigUrlFactory.of(data.search(q));
+        List<Gig> gigs = data.search(q);
         model.addAttribute("title", gigs.size() + " results for " + q);
         model.addAttribute("gigs", gigs);
         return "results";
@@ -57,7 +56,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/all")
     public String all(Model model) {
-        List<GigUrl> gigs = gigUrlFactory.of(data.byDateDescending());
+        List<Gig> gigs = data.byDateDescending();
         model.addAttribute("title", "All gigs");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -65,7 +64,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/location")
     public String location(Model model) {
-        List<GigUrl> gigs = gigUrlFactory.of(data.byMostCommonLocation());
+        List<Gig> gigs = data.byMostCommonLocation();
         model.addAttribute("title", data.mostCommonLocation());
         model.addAttribute("gigs", gigs);
         return "results";
@@ -79,7 +78,7 @@ public class WebController implements ErrorController {
             return "error";
         }
 
-        model.addAttribute("gig", gigUrlFactory.of(gig.get()));
+        model.addAttribute("gig", gig.get());
         return "gig";
     }
 

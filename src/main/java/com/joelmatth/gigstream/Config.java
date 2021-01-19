@@ -28,11 +28,6 @@ public class Config {
     }
 
     @Bean
-    public GigUrlFactory gigUrlFactory(Config config) {
-        return new GigUrlFactory(config);
-    }
-
-    @Bean
     public LayoutDialect layoutDialect() {
         return new LayoutDialect();
     }

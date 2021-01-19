@@ -5,10 +5,10 @@
 
     <div class="row">
     <a th:each="gig : ${gigs}" class="set col mb-3"
-       th:href="@{/gig/{id}(id=${gig.gig.id})}">
+       th:href="@{/gig/{id}(id=${gig.id})}">
         <div class="name" th:text="${gig.formattedName}"></div>
-        <div class="year text-muted" th:text="${gig.gig.year}"></div>
-        <img class="thumb" width="320" height="180" th:src="@{${gig.thumb}}"/>
+        <div class="year text-muted" th:text="${gig.year}"></div>
+        <img class="thumb" width="320" height="180" th:src="@{${gig.objectUrl(config.dataUrl, 'thumb')}}"/>
     </a>
     </div>
 </div>
