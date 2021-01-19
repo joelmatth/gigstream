@@ -16,9 +16,7 @@ public class Config {
 
     public boolean hasFavicon152 = resourceExists("static/favicon-152.png");
     public boolean hasLogo = resourceExists("static/img/logo.png");
-
-    // Placeholder location until set of gigs have been loaded
-    public String mostCommonLocation = "Location";
+    public String mostCommonLocation = "";
 
     @Bean
     public GigUrlFactory gigUrlFactory(Config config) {
