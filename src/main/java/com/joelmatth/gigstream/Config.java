@@ -1,10 +1,10 @@
 package com.joelmatth.gigstream;
 
+import com.joelmatth.gigstream.data.Data;
+import com.joelmatth.gigstream.data.DataSource;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration

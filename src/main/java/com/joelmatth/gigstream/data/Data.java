@@ -1,5 +1,6 @@
-package com.joelmatth.gigstream;
+package com.joelmatth.gigstream.data;
 
+import com.joelmatth.gigstream.Gig;
 import lombok.Value;
 
 import java.util.List;
@@ -17,74 +18,52 @@ public class Data {
 
     List<Gig> gigs;
 
-    Optional<Gig> byId(int id) {
+    public Optional<Gig> byId(int id) {
         return gigs.stream()
                 .filter(gig -> gig.getId() == id)
                 .findFirst();
     }
 
-    List<Gig> byDateDescending() {
+    public List<Gig> byDateDescending() {
         return gigs.stream()
                 .sorted(this::dateDescending)
                 .collect(toList());
     }
 
-    List<Gig> byMostCommonLocation() {
+    public List<Gig> byMostCommonLocation() {
         return gigs.stream()
-                .filter(gig -> locationMatch(gig, mostCommonLocation()))
+                .filter(gig -> Matches.location(gig, mostCommonLocation()))
                 .sorted(this::dateDescending)
                 .collect(toList());
     }
 
-    List<Gig> byRecentlyAdded() {
+    public List<Gig> byRecentlyAdded() {
         return gigs.stream()
                 .sorted(this::idDescending)
                 .limit(NUM_RECENT)
                 .collect(toList());
     }
 
-    List<Gig> search(String term) {
+    public List<Gig> search(String term) {
         return gigs.stream()
                 .filter(gig ->
-                            artistMatch(gig, term) ||
-                            dateMatch(gig, term) ||
-                            locationMatch(gig, term) ||
-                            nameMatch(gig, term))
+                            Matches.artist(gig, term) ||
+                            Matches.date(gig, term) ||
+                            Matches.location(gig, term) ||
+                            Matches.name(gig, term))
                 .sorted(this::dateDescending)
                 .collect(toList());
     }
 
-    boolean artistMatch(Gig gig, String term) {
-        return termMatch(gig, Gig::getArtist, term);
-    }
-
-    boolean dateMatch(Gig gig, String term) {
-        return termMatch(gig, g -> g.getDate().toString(), term);
-    }
-
-    boolean locationMatch(Gig gig, String term) {
-        return termMatch(gig, Gig::getLocation, term);
-    }
-
-    boolean nameMatch(Gig gig, String term) {
-        return termMatch(gig, Gig::getName, term);
-    }
-
-    boolean termMatch(Gig gig, Getter getter, String term) {
-        String value = getter.get(gig);
-        if (value == null) return false;
-        return value.toLowerCase().contains(term.toLowerCase());
-    }
-
-    int dateDescending(Gig left, Gig right) {
+    public int dateDescending(Gig left, Gig right) {
         return right.getDate().compareTo(left.getDate());
     }
 
-    int idAscending(Gig left, Gig right) {
+    public int idAscending(Gig left, Gig right) {
         return left.getId() - right.getId();
     }
 
-    int idDescending(Gig left, Gig right) {
+    public int idDescending(Gig left, Gig right) {
         return -idAscending(left, right);
     }
 
@@ -101,10 +80,6 @@ public class Data {
         }
 
         return "";
-    }
-
-    interface Getter {
-        String get(Gig gig);
     }
 
 }

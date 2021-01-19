@@ -1,5 +1,6 @@
 package com.joelmatth.gigstream;
 
+import com.joelmatth.gigstream.data.Data;
 import lombok.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;

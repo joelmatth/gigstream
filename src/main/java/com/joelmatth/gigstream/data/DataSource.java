@@ -1,7 +1,10 @@
-package com.joelmatth.gigstream;
+package com.joelmatth.gigstream.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joelmatth.gigstream.Config;
+import com.joelmatth.gigstream.Gig;
+import com.joelmatth.gigstream.UrlFactory;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +21,7 @@ public class DataSource {
 
     Config config;
 
-    List<Gig> get() {
+    public List<Gig> get() {
         List<Gig> gigs = new ArrayList<>();
         URL listUrl = UrlFactory.get(config.dataUrl, config.indexFilename);
 

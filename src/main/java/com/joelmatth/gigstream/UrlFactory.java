@@ -7,9 +7,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
-class UrlFactory {
+public class UrlFactory {
 
-    static URL get(String root, String... segments) {
+    public static URL get(String root, String... segments) {
         try {
             return UriComponentsBuilder.fromHttpUrl(root).pathSegment(segments).build().toUri().toURL();
         } catch (MalformedURLException | IllegalArgumentException e) {
