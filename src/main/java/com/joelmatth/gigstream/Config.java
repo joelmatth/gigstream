@@ -18,13 +18,8 @@ public class Config {
     public boolean hasLogo = resourceExists("static/img/logo.png");
 
     @Bean
-    public DataSource dataSource(Config config) {
-        return new DataSource(config);
-    }
-
-    @Bean
-    public Data data(DataSource dataSource)  {
-        return new Data(dataSource.get());
+    public Data data(Config config)  {
+        return new Data(DataSource.get(config));
     }
 
     @Bean
