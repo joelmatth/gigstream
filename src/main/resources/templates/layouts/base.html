@@ -18,7 +18,7 @@
             <img th:src="@{/img/logo.png}" height="40" class="d-inline-block align-top" th:title="${config.siteTitle} + ' Home'" />
         </a>
         <a th:unless="${config.hasLogo}" class="navbar-brand" th:text="${config.siteTitle}" th:href="@{/}"></a>
-        <a th:href="@{/location}" th:text="${config.mostCommonLocation}"></a>
+        <a th:href="@{/location}" th:text="${mostCommonLocation}"></a>
         <a th:href="@{/all}">All</a>
         <form class="form-inline" method="get" th:action="@{/search}">
             <input class="form-control mr-sm-2" type="search" aria-label="Search" name="q" placeholder="Search">

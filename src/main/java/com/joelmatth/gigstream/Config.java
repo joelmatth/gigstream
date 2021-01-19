@@ -16,16 +16,20 @@ public class Config {
 
     public boolean hasFavicon152 = resourceExists("static/favicon-152.png");
     public boolean hasLogo = resourceExists("static/img/logo.png");
-    public String mostCommonLocation = "";
+
+    @Bean
+    public DataSource dataSource(Config config) {
+        return new DataSource(config);
+    }
+
+    @Bean
+    public Data data(DataSource dataSource)  {
+        return new Data(dataSource.get());
+    }
 
     @Bean
     public GigUrlFactory gigUrlFactory(Config config) {
         return new GigUrlFactory(config);
-    }
-
-    @Bean
-    Search search(Repository repository, Config config) {
-        return new Search(repository, config);
     }
 
     @Bean
