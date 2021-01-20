@@ -3,7 +3,6 @@ package com.joelmatth.gigstream.controller;
 import com.joelmatth.gigstream.Config;
 import com.joelmatth.gigstream.data.Repository;
 import com.joelmatth.gigstream.model.Gig;
-import lombok.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@Value
 public class WebController implements ErrorController {
 
-    Repository repository;
-    Config config;
+    private final Config config;
+    private final Repository repository;
+
+    public WebController(Config config, Repository repository) {
+        this.config = config;
+        this.repository = repository;
+    }
 
     @ModelAttribute("config")
     public Config config() {
