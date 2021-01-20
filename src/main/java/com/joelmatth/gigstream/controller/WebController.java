@@ -1,6 +1,8 @@
-package com.joelmatth.gigstream;
+package com.joelmatth.gigstream.controller;
 
-import com.joelmatth.gigstream.data.Data;
+import com.joelmatth.gigstream.Config;
+import com.joelmatth.gigstream.data.Repository;
+import com.joelmatth.gigstream.model.Gig;
 import lombok.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,7 @@ import java.util.Optional;
 @Value
 public class WebController implements ErrorController {
 
-    Data data;
+    Repository repository;
     Config config;
 
     @ModelAttribute("config")
@@ -24,7 +26,7 @@ public class WebController implements ErrorController {
 
     @ModelAttribute("mostCommonLocation")
     public String mostCommonLocation() {
-        return data.mostCommonLocation();
+        return repository.mostCommonLocation();
     }
 
     @Override
@@ -40,7 +42,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Gig> gigs = data.byRecentlyAdded();
+        List<Gig> gigs = repository.byRecentlyAdded();
         model.addAttribute("title", "Recently added");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -48,7 +50,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/search")
     public String search(@RequestParam(name = "q") String q, Model model) {
-        List<Gig> gigs = data.search(q);
+        List<Gig> gigs = repository.search(q);
         model.addAttribute("title", gigs.size() + " results for " + q);
         model.addAttribute("gigs", gigs);
         return "results";
@@ -56,7 +58,7 @@ public class WebController implements ErrorController {
 
     @GetMapping("/all")
     public String all(Model model) {
-        List<Gig> gigs = data.byDateDescending();
+        List<Gig> gigs = repository.byDateDescending();
         model.addAttribute("title", "All gigs");
         model.addAttribute("gigs", gigs);
         return "results";
@@ -64,15 +66,15 @@ public class WebController implements ErrorController {
 
     @GetMapping("/location")
     public String location(Model model) {
-        List<Gig> gigs = data.byMostCommonLocation();
-        model.addAttribute("title", data.mostCommonLocation());
+        List<Gig> gigs = repository.byMostCommonLocation();
+        model.addAttribute("title", repository.mostCommonLocation());
         model.addAttribute("gigs", gigs);
         return "results";
     }
 
     @GetMapping("/gig/{id}")
     public String gig(@PathVariable(name = "id") int id, Model model) {
-        Optional<Gig> gig = data.byId(id);
+        Optional<Gig> gig = repository.byId(id);
 
         if (!gig.isPresent()) {
             return "error";

@@ -1,8 +1,8 @@
 package com.joelmatth.gigstream.data;
 
-import com.joelmatth.gigstream.Gig;
+import com.joelmatth.gigstream.model.Gig;
 
-class Matches {
+class GigMatches {
 
     static boolean artist(Gig gig, String term) {
         return termMatch(gig, Gig::getArtist, term);

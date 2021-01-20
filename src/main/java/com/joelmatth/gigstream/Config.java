@@ -1,7 +1,7 @@
 package com.joelmatth.gigstream;
 
-import com.joelmatth.gigstream.data.Data;
-import com.joelmatth.gigstream.data.DataSource;
+import com.joelmatth.gigstream.data.Repository;
+import com.joelmatth.gigstream.service.GigService;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +18,13 @@ public class Config {
     public boolean hasLogo = resourceExists("static/img/logo.png");
 
     @Bean
-    public Data data(Config config)  {
-        return new Data(DataSource.get(config));
+    public GigService gigService(Config config) {
+        return new GigService(config);
+    }
+
+    @Bean
+    public Repository repository(GigService gigService)  {
+        return new Repository(gigService.getGigs());
     }
 
     @Bean

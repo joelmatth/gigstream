@@ -1,18 +1,22 @@
-package com.joelmatth.gigstream.data;
+package com.joelmatth.gigstream.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joelmatth.gigstream.Config;
-import com.joelmatth.gigstream.Gig;
+import com.joelmatth.gigstream.model.Gig;
+import lombok.Value;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-public class DataSource {
+@Value
+public class GigService {
 
-    public static List<Gig> get(Config config) {
+    Config config;
+
+    public List<Gig> getGigs() {
         try {
             URL indexUrl = UriComponentsBuilder.fromHttpUrl(config.dataUrl)
                     .pathSegment(config.indexFilename).build().toUri().toURL();

@@ -1,6 +1,6 @@
 package com.joelmatth.gigstream.data;
 
-import com.joelmatth.gigstream.Gig;
+import com.joelmatth.gigstream.model.Gig;
 import lombok.Value;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 @Value
-public class Data {
+public class Repository {
 
     public static int NUM_RECENT = 12;
 
@@ -32,7 +32,7 @@ public class Data {
 
     public List<Gig> byMostCommonLocation() {
         return gigs.stream()
-                .filter(gig -> Matches.location(gig, mostCommonLocation()))
+                .filter(gig -> GigMatches.location(gig, mostCommonLocation()))
                 .sorted(this::dateDescending)
                 .collect(toList());
     }
@@ -47,10 +47,10 @@ public class Data {
     public List<Gig> search(String term) {
         return gigs.stream()
                 .filter(gig ->
-                            Matches.artist(gig, term) ||
-                            Matches.date(gig, term) ||
-                            Matches.location(gig, term) ||
-                            Matches.name(gig, term))
+                            GigMatches.artist(gig, term) ||
+                            GigMatches.date(gig, term) ||
+                            GigMatches.location(gig, term) ||
+                            GigMatches.name(gig, term))
                 .sorted(this::dateDescending)
                 .collect(toList());
     }
