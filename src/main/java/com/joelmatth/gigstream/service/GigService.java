@@ -23,8 +23,7 @@ public class GigService {
 
             return new ObjectMapper().readValue(indexUrl, new TypeReference<List<Gig>>(){});
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+            System.err.println(e.getMessage());
         }
 
         return null;

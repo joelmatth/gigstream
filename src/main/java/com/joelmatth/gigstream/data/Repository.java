@@ -1,8 +1,10 @@
 package com.joelmatth.gigstream.data;
 
 import com.joelmatth.gigstream.model.Gig;
-import lombok.Value;
+import com.joelmatth.gigstream.service.GigService;
+import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,12 +13,17 @@ import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
-@Value
 public class Repository {
 
-    public static int NUM_RECENT = 12;
+    public static final int NUM_RECENT = 12;
+    public static final long RETRIEVAL_DELAY = 10 * 60 * 1000; // Ten minutes
 
-    List<Gig> gigs;
+    private final GigService gigService;
+    private List<Gig> gigs = new ArrayList<>();
+
+    public Repository(GigService gigService) {
+        this.gigService = gigService;
+    }
 
     public Optional<Gig> byId(int id) {
         return gigs.stream()
@@ -80,6 +87,12 @@ public class Repository {
         }
 
         return "";
+    }
+
+    @Scheduled(fixedDelay = RETRIEVAL_DELAY)
+    private void retrieveGigs() {
+        List<Gig> gigs = gigService.getGigs();
+        if (gigs != null) this.gigs = gigs;
     }
 
 }

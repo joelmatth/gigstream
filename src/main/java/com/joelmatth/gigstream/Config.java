@@ -6,8 +6,10 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
+@EnableScheduling
 public class Config {
 
     public String dataUrl = envVarOrDefault("DATA_URL", "https://raw.githubusercontent.com/joelmatth/gigstream/master/example");
@@ -24,7 +26,7 @@ public class Config {
 
     @Bean
     public Repository repository(GigService gigService)  {
-        return new Repository(gigService.getGigs());
+        return new Repository(gigService);
     }
 
     @Bean
